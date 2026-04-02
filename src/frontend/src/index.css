@@ -1,0 +1,514 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Navy + Orange palette in OKLCH */
+    --background: 98 0.005 240;
+    --foreground: 20 0.02 250;
+    --card: 100 0 0;
+    --card-foreground: 20 0.02 250;
+    --popover: 100 0 0;
+    --popover-foreground: 20 0.02 250;
+    --primary: 55 0.22 42; /* Orange #FF6B00 */
+    --primary-foreground: 100 0 0;
+    --secondary: 22 0.06 250; /* Deep navy */
+    --secondary-foreground: 95 0 0;
+    --muted: 95 0.01 240;
+    --muted-foreground: 50 0.02 250;
+    --accent: 55 0.22 42;
+    --accent-foreground: 100 0 0;
+    --destructive: 50 0.22 25;
+    --destructive-foreground: 100 0 0;
+    --border: 88 0.01 240;
+    --input: 88 0.01 240;
+    --ring: 55 0.22 42;
+    --radius: 0.5rem;
+
+    /* Custom brand tokens */
+    --navy: #0a2540;
+    --navy-light: #0d3060;
+    --orange: #ff6b00;
+    --orange-hover: #e05f00;
+    --gray-bg: #f3f6fa;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #ffffff;
+  color: #0a2540;
+  overflow-x: hidden;
+}
+
+/* ============ NAVBAR ============ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+  padding: 1.25rem 0;
+}
+
+.navbar.scrolled {
+  background: #0a2540;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  padding: 0.75rem 0;
+}
+
+.nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #ff6b00;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #ff6b00;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ============ HERO ============ */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/generated/hero-bg.dim_1920x1080.jpg");
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  transition: transform 8s ease;
+}
+
+.hero-bg.loaded {
+  transform: scale(1);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(10, 37, 64, 0.92) 0%,
+    rgba(10, 37, 64, 0.75) 50%,
+    rgba(10, 37, 64, 0.2) 100%
+  );
+}
+
+/* ============ SEARCH BAR ============ */
+.search-card {
+  position: relative;
+  z-index: 10;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(10, 37, 64, 0.2);
+  padding: 1.5rem 2rem;
+  margin-top: -3rem;
+}
+
+/* ============ SECTION TITLES ============ */
+.section-eyebrow {
+  color: #ff6b00;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  color: #0a2540;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+
+/* ============ SERVICE CARDS ============ */
+.service-card {
+  border: 2px solid #0a2540;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  background: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: default;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(10, 37, 64, 0.12);
+  border-color: #ff6b00;
+}
+
+.service-icon {
+  width: 64px;
+  height: 64px;
+  background: #fff3e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: #ff6b00;
+  font-size: 1.6rem;
+  transition: background 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  background: #ff6b00;
+  color: white;
+}
+
+/* ============ PROPERTY CARDS ============ */
+.property-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(10, 37, 64, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(10, 37, 64, 0.16);
+}
+
+.property-image-wrap {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.property-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.property-card:hover .property-image-wrap img {
+  transform: scale(1.06);
+}
+
+.price-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #ff6b00;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+/* ============ BUTTONS ============ */
+.btn-primary {
+  background: #ff6b00;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background: #e05f00;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.35);
+}
+
+.btn-outline-white {
+  background: transparent;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border-radius: 6px;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-outline-white:hover {
+  background: white;
+  color: #0a2540;
+}
+
+.btn-outline-navy {
+  background: transparent;
+  color: #0a2540;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.625rem 1.25rem;
+  border-radius: 6px;
+  border: 2px solid #0a2540;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-outline-navy:hover {
+  background: #0a2540;
+  color: white;
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.875rem 1.75rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn-whatsapp:hover {
+  background: #1db954;
+  transform: translateY(-1px);
+}
+
+/* ============ FLOATING WHATSAPP ============ */
+.float-whatsapp {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.6rem;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: pulse-wa 2.5s infinite;
+}
+
+.float-whatsapp:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55);
+}
+
+@keyframes pulse-wa {
+  0%,
+  100% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 32px rgba(37, 211, 102, 0.65);
+  }
+}
+
+/* ============ FADE IN ANIMATION ============ */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-up.delay-1 {
+  transition-delay: 0.1s;
+}
+.fade-in-up.delay-2 {
+  transition-delay: 0.2s;
+}
+.fade-in-up.delay-3 {
+  transition-delay: 0.3s;
+}
+.fade-in-up.delay-4 {
+  transition-delay: 0.4s;
+}
+
+/* ============ CONTACT FORM ============ */
+.form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1.5px solid #d1dbe8;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  color: #0a2540;
+  background: white;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #ff6b00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+}
+
+.form-input::placeholder {
+  color: #a0aec0;
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  background: #0a2540;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ============ MOBILE MENU ============ */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #0a2540;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-nav-link {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+  color: #ff6b00;
+}
+
+/* ============ MISC ============ */
+.divider {
+  width: 50px;
+  height: 3px;
+  background: #ff6b00;
+  margin: 1rem 0;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ff6b00;
+  line-height: 1;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.contact-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  background: #fff3e8;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff6b00;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .search-card {
+    margin-top: 0;
+    border-radius: 0;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
